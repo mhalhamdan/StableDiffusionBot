@@ -1,0 +1,11 @@
+name: stablediff_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - discord.py
+  - diffusers
+  - transformers
+  - tensorboard
+  - ftfy
+prefix: /Users/maalham/opt/miniconda3/envs/stablediff_env
