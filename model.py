@@ -3,7 +3,7 @@ from diffusers import AutoencoderKL, DDPMScheduler, PNDMScheduler, StableDiffusi
 from diffusers.hub_utils import init_git_repo, push_to_hub
 from diffusers.optimization import get_scheduler
 from credentials import HUGGINGFACE_TOKEN
-
+from PIL import Image
 pretrained_model = "CompVis/stable-diffusion-v1-4"
 
 print("Loading model...")
@@ -12,7 +12,7 @@ pipeline = StableDiffusionPipeline.from_pretrained(
     ).to("cuda")
 print("Model loaded successfully!")
 
-def generate(prompt, count):
+def generate(prompt, count) -> list[Image.Image]:
     all_images = [] 
     images = pipeline(prompt, num_images_per_prompt=count, num_inference_steps=50, guidance_scale=7.5).images
     all_images.extend(images)
@@ -20,9 +20,11 @@ def generate(prompt, count):
 
 if __name__ == "__main__":
 
-    prompt = "test prompt here"
-
-    all_images = generate(prompt, 1)
-
-    print(all_images)
-    print(type(all_images))
+    while True:
+        prompt = input("Enter prompt: ")
+        print("Generating...")
+        all_images = generate(prompt, 1)
+        print("Done:")
+        print(all_images)
+        print(type(all_images))
+        all_images[0].show()
